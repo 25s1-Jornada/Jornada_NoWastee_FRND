@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# no.wasTee
 
-## Getting Started
+## Sobre
+Esse projeto foca numa solução voltada para a empresa no.wasTee, mais especificamente na sua [loja online](https://nowastee.com/loja/produto/) de roupas.
 
-First, run the development server:
+[Website para referência](https://nowastee.com/loja/categoria-produto/t-shirts/casual/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Problemas
+A equipe no.wasTee demonstrou necessidade em melhorar o processo de venda das suas camisetas e sugeriu duas melhorias:
+1. Transparência no processo de criação da peça mostrando desde a aquisição da materia prima até o processo de fabricação e entrega ao cliente.
+2. Visualização 3D dos modelos disponíveis para compra, assim como possibilitar que o cliente faça uploads de estampas para ter uma visão prévia do que vai comporar.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Solução (Breve)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Para solucionar o problema da transparência da fabricação, cada produto terá uma página interativa mostrando o passo à passo do seu ciclo de vida. Além disso, cada produto terá uma etiqueta com o qrCode que, ao ser scanneado, redirecionará para essa página da web.
+2. Para solucionar o problema dos modelos 3D, na página de compra dos produtos vamos adicionar um visualizador 3D do modelo em questão. Durante a visualização do modelo (tela cheia), o usuário terá a opção de subir arquivos *.png* ou *.jpg* para ser adicionado como estampa do produto no modelo 3D.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# 1. Processo de fabricação (TO DO)
 
-## Learn More
+# 2. Visualização 3D (TO DO)
 
-To learn more about Next.js, take a look at the following resources:
+## 2.1 Tecnologias
+### Blender
+Para manipular UV map dos modelos 3D, dessa forma será possível fazer com que a textura seja aplicada apenas em uma parte do modelo, no caso das camisetas costuma ser um retângulo na parte frontal.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Next.js (frontend) e SpringBoot (backend)
+Assim será possível hostear um website que acessa dados reais. O website não será funcional, mas sim um protótipo.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 2.2 Diagrama ERM
+![ERM Diagram](./images/no.wasTee.png)
