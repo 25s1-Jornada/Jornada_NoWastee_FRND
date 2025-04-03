@@ -1,0 +1,36 @@
+name: CI Projeto Frontend No.wasTee
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test-react:                 # Nome do job
+    runs-on: ubuntu-latest    # Ambiente usado (Linux)
+
+    steps:                    # Etapas do CI
+      - name: Checkout do código
+        uses: actions/checkout@v3   # Baixa o código do seu repositório
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18         # Instala o Node.js v18
+
+      - name: Instalar dependências
+        run: npm install           # Instala os pacotes do seu projeto
+
+      - name: Rodar testes com status personalizado
+        run: |
+          echo "Rodando testes..."
+          if npm test -- --watchAll=false; then
+            echo "Resultado: ✅ OK"
+          else
+            echo "Resultado: ❌ NOOK"
+            exit 1
+          fi
