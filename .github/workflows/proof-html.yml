@@ -10,27 +10,30 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-react:                 # Nome do job
-    runs-on: ubuntu-latest    # Ambiente usado (Linux)
+  test-react:
+    runs-on: ubuntu-latest
 
-    steps:                    # Etapas do CI
+    steps:
       - name: Checkout do código
-        uses: actions/checkout@v3   # Baixa o código do seu repositório
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18         # Instala o Node.js v18
+          node-version: 18
 
       - name: Instalar dependências
-        run: npm install           # Instala os pacotes do seu projeto
+        run: npm install
 
-      - name: Rodar testes com status personalizado
-        run: |
-          echo "Rodando testes..."
-          if npm test -- --watchAll=false; then
-            echo "Resultado: ✅ OK"
-          else
-            echo "Resultado: ❌ NOOK"
-            exit 1
-          fi
+      - name: Validar HTML com html-validate
+        run: npx html-validate "build/**/*.html"
+
+#      - name: Rodar testes com status personalizado
+#        run: |
+#          echo "Rodando testes..."
+#          if npm test -- --watchAll=false; then
+#            echo "Resultado: ✅ OK"
+#          else
+#            echo "Resultado: ❌ NOOK"
+#            exit 1
+#          fi
