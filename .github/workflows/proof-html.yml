@@ -25,6 +25,9 @@ jobs:
       - name: Instalar dependências
         run: npm install
 
+      - name: Buildar projeto
+        run: npm run build
+        
       - name: Validar HTML com html-validate
         run: npx html-validate "build/**/*.html"
 
