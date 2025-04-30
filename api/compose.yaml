@@ -2,8 +2,13 @@ services:
   postgres:
     image: 'postgres:latest'
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      - 'POSTGRES_DB=nowastee'
+      - 'POSTGRES_PASSWORD=docker'
+      - 'POSTGRES_USER=docker'
+    volumes:
+      - 'nowastee_pg_data:/bitnami/postgresql'
     ports:
-      - '5432'
+      - '8000:5432'
+
+volumes:
+  nowastee_pg_data:
