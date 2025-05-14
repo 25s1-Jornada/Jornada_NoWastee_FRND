@@ -1,50 +1,35 @@
-// "use client";
-// import { Canvas, useLoader } from "@react-three/fiber";
-// import { useFBX, useTexture } from "@react-three/drei";
-// import { OrbitControls,  } from "@react-three/drei";
-// import { useState, useRef } from "react";
-// import { TextureLoader } from "three";
+'use client'
+import { OrbitControls, useFBX, useGLTF } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { Suspense, useEffect, useState } from "react";
 
-// export interface ModelVisualizerProps {
-//     modelPath: string;
-//     texture: string;
-// }
+function FBXModel() {
+  const model = useFBX("/models/tshirt.fbx"); // This will crash if run on server
+  return <primitive object={model} scale={0.02} />;
+}
 
-// interface ModelRendererProps {
-//     modelPath: string;
-//     texture: string;
-// }
+function GLBModel() {
+  const { scene } = useGLTF("/models/tshirt.glb");
+  return <primitive object={scene} scale={0.02} />;
+}
 
-// function Shirt(props: ModelRendererProps) {
-//   const fbx = useFBX(props.modelPath); // Load the model
-//   const meshRef = useRef(); // Reference to the shirt mesh
+export default function ModelVisualizer() {
+  const [mounted, setMounted] = useState(false);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-//   const colorMap = useLoader(TextureLoader, props.texture)
+  if (!mounted) return null;
 
-//   return (
-//     <mesh ref={meshRef}>
-//       {/* <primitive object={fbx} /> */}
-//       <sphereGeometry args={[1, 32, 32]} />
-//       <meshStandardMaterial map={colorMap} />
-//     </mesh>
-//   );
-// }
-
-// export default function ModelVisualizer(props: ModelVisualizerProps) {
-//   return (
-//     <div className="w-screen h-screen">
-//       <Canvas camera={{ position: [0, 2, 5] }}>
-//         {/* Lighting */}
-//         <ambientLight intensity={1} />
-//         <directionalLight position={[5, 5, 5]} intensity={0.8} />
-        
-//         {/* 3D Shirt */}
-//         <Shirt scale={0.1} modelPath={props.modelPath} texture={props.texture} />
-        
-//         {/* Enable mouse rotation */}
-//         <OrbitControls />
-//       </Canvas>
-//     </div>
-//   );
-// }
+  return (
+    <Canvas className="w-full h-full">
+      <ambientLight intensity={1.2} />
+      <directionalLight position={[10, 10, 5]} />
+      <Suspense fallback={null}>
+        <GLBModel />
+        <OrbitControls />
+      </Suspense>
+    </Canvas>
+  );
+}
