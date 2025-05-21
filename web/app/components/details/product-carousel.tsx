@@ -4,7 +4,7 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import Image from "next/image";
 import { useState } from "react";
-import ModelVisualizer from "../model-visualizer";
+import ModelVisualizer from "@/app/components/model-visualizer";
 
 interface Props {
   images: string[];

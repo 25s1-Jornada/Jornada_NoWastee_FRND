@@ -1,34 +1,11 @@
 import FilterSidebar from "./components/filter-sidebar";
 import Navbar from "./components/navbar";
 import ProductList from "./components/product-list";
+import { getProductService } from "@/lib/factories/product-service.factory";
 
-export default function LinhaArtPage() {
-  const products = [
-    {
-      name: 'abitoff',
-      price: 'R$ 215,00',
-      image: '/products/foto-1.jpg',
-      category: 'LINHA ART',
-    },
-    {
-      name: 'lace tee',
-      price: 'R$ 197,00',
-      image: '/products/foto-2.jpg',
-      category: 'LINHA ART',
-    },
-    {
-      name: 'a.02 regata long',
-      price: 'R$ 297,00',
-      image: '/products/foto-3.jpg',
-      category: 'A.02',
-    },
-    {
-      name: 'abitoff cut',
-      price: 'R$ 225,00',
-      image: '/products/foto-4.jpg',
-      category: 'LINHA ART',
-    },
-  ];
+export default async function HomePage() {
+  const productService = getProductService();
+  const products = await productService.getAll();
 
   return (
     <div className="w-full overflow-hidden h-full">

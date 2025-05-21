@@ -1,22 +1,16 @@
+import type { Product } from '@/lib/entities/product.interface';
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface Product {
-  name: string;
-  price: string;
-  image: string;
-  category: string;
-}
-
-interface Props {
+export interface ProductListComponentProps {
   products: Product[];
 }
 
-export default function ProductList({ products }: Props) {
+export default function ProductList({ products }: Readonly<ProductListComponentProps>) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
-      {products.map((product, i) => (
-        <Link href={'pages/product'} key={i}>
+      {products.map((product) => (
+        <Link href={'pages/product'} key={product.id}>
         <div>
           <Image
             src={product.image}

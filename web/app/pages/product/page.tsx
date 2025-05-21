@@ -1,5 +1,5 @@
-import ProductCarousel from "../../components/details/product-carousel";
-import Navbar from "../../components/navbar";
+import ProductCarousel from "@/app/components/details/product-carousel";
+import Navbar from "@/app/components/navbar";
 
 export default function ProductPage() {
   const images = [
