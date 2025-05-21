@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 /* Custom Global Styles */
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
 
 body {
   @apply bg-white text-neutral-800 font-sans;

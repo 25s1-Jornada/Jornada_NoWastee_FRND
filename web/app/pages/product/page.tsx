@@ -1,5 +1,4 @@
 import ProductCarousel from "@/app/components/details/product-carousel";
-import Navbar from "@/app/components/navbar";
 
 export default function ProductPage() {
   const images = [
@@ -10,9 +9,7 @@ export default function ProductPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-white px-8 md:px-16 py-10 font-sans h-full overflow-hidden">
-      <Navbar />
-
+    <div className="overflow-auto h-full">
       {/* Breadcrumb */}
       <div className="text-sm text-neutral-500 mb-6">
         Início / t-shirts / linha art / <span className="text-black">abitoff</span>

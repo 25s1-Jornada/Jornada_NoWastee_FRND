@@ -1,6 +1,6 @@
 export default function FilterSidebar() {
   return (
-    <aside className="w-full lg:w-1/4 space-y-6">
+    <aside className="w-full space-y-6">
       {/* Search */}
       <div>
         <h3 className="uppercase text-sm font-semibold mb-2">Search</h3>
