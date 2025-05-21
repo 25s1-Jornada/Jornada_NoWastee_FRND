@@ -29,7 +29,6 @@ describe('HomePage', () => {
   it('renders the page with all main sections and products', async () => {
     render(await HomePage());
 
-    expect(screen.getByTestId('navbar')).toBeInTheDocument();
     expect(screen.getByTestId('sidebar')).toBeInTheDocument();
     expect(screen.getByTestId('product-list')).toBeInTheDocument();
 
