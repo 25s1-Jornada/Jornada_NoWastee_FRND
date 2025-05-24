@@ -1,5 +1,6 @@
 // __tests__/setup-tests.ts
 import '@testing-library/jest-dom';
+import React from 'react';
 import { vi } from 'vitest';
 import type { ImgHTMLAttributes, ReactNode } from "react";
 import { MockProductService } from './__mocks__/product-service.mock';

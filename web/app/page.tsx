@@ -1,3 +1,4 @@
+import React from 'react';
 import FilterSidebar from "./components/filter-sidebar";
 import ProductList from "./components/product-list";
 import { getProductService } from "@/lib/factories/product-service.factory";
