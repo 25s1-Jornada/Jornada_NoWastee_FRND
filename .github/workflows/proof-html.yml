@@ -13,6 +13,10 @@ jobs:
   test-react:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./web
+
     steps:
       - name: Checkout do código
         uses: actions/checkout@v3
@@ -25,18 +29,11 @@ jobs:
       - name: Instalar dependências
         run: npm install
 
-      - name: Buildar projeto
+      - name: Rodar build do projeto (opcional)
         run: npm run build
-        
-      - name: Validar HTML com html-validate
-        run: npx html-validate "build/**/*.html"
 
-#      - name: Rodar testes com status personalizado
-#        run: |
-#          echo "Rodando testes..."
-#          if npm test -- --watchAll=false; then
-#            echo "Resultado: ✅ OK"
-#          else
-#            echo "Resultado: ❌ NOOK"
-#            exit 1
-#          fi
+      - name: Rodar testes com Vitest
+        run: npx vitest run
+
+      - name: Validar HTML (se aplicável após build)
+        run: npx html-validate "build/**/*.html"
