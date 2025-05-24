@@ -36,7 +36,3 @@ jobs:
 
       - name: Rodar testes com Vitest
         run: npx vitest run
-
-      - name: Validar HTML (se aplicável após build)
-        run: npx html-validate "build/**/*.html"
-        continue-on-error: true
