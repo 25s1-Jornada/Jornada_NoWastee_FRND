@@ -35,21 +35,18 @@ function Loader() {
 }
 
 function GLBModel() {
-  const { scene } = useGLTF("/models/tshirt.glb");
-  return <primitive object={scene} position={[0, -5, 0]} scale={0.01} />;
+  const { scene } = useGLTF("/models/nowastee.glb");
+  return <primitive object={scene} position={[0, 0, 0]} scale={1} />;
 }
 
 export default function ModelVisualizer() {
   return (
-    <Canvas camera={{ position: [0, 1, 3], zoom: 0.5 }} shadows>
+    <Canvas camera={{ position: [0, 0, 3], zoom: 1 }} shadows>
       <ambientLight intensity={0.6} />
       <directionalLight position={[5, 5, 5]} intensity={1.2} />
       <Suspense fallback={<Loader />}>
         <GLBModel />
-        <OrbitControls target={[0, 1, 0]} />
-        <Circle args={[5]} rotation-x={-Math.PI / 2} receiveShadow>
-          <meshStandardMaterial />
-        </Circle>
+        <OrbitControls target={[0, 0, 0]} />
         <Stats />
       </Suspense>
     </Canvas>

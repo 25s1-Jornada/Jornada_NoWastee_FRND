@@ -15,7 +15,7 @@ interface Props {
 export default function ProductCarousel({ images }: Props) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [ref, slider] = useKeenSlider<HTMLDivElement>({
-    initial: 0,
+    initial: 5,
     slideChanged(slider) {
       const index = slider.track.details.rel;
       setCurrentSlide(index);
