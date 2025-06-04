@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Quicksand } from "next/font/google";
+import { DM_Sans, Playfair_Display, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"]
+})
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
+  subsets: ["latin"]
+})
 
-const quicksand = Quicksand({
-  variable: "--font-quicksand",
+const playfairDisplay = Playfair_Display({
+  variable: "--font-playfair-display",
   subsets: ["latin"]
 })
 
@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${quicksand.variable} antialiased h-full overflow-hidden`}
+        className={`${spaceGrotesk.variable} ${dmSans.variable} ${playfairDisplay.variable} antialiased h-full overflow-hidden`}
       >
         <div className="flex flex-col h-full">
           <Navbar />

@@ -19,9 +19,9 @@ export default function ProductList({ products }: Readonly<ProductListComponentP
             height={800}
             className="w-full h-auto object-cover"
           />
-          <p className="uppercase text-xs tracking-wide text-gray-500 mt-2">{product.category}</p>
-          <h2 className="text-neutral-800 text-lg">{product.name}</h2>
-          <p className="text-neutral-600">{product.price}</p>
+          <p className="uppercase text-xs font-dm-sans tracking-wide text-gray-500 mt-2">{product.category}</p>
+          <h2 className="text-neutral-900 font-playfair-display text-lg">{product.name}</h2>
+          <p className="text-neutral-500 font-dm-sans">{product.price}</p>
         </div>
         </Link>
       ))}

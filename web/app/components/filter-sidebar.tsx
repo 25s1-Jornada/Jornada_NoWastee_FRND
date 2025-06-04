@@ -18,7 +18,7 @@ export default function FilterSidebar({ onFilter, query, range }: Readonly<Props
   };
 
   return (
-    <aside className="w-full space-y-6">
+    <aside className="w-full space-y-6 font-dm-sans">
       <div>
         <h3 className="uppercase text-sm font-semibold mb-2">Search</h3>
         <div className="flex border">
@@ -30,7 +30,7 @@ export default function FilterSidebar({ onFilter, query, range }: Readonly<Props
             onChange={(e) => setSearch(e.target.value)}
           />
           <button
-            className="bg-background text-foreground px-4 flex items-center justify-center"
+            className="bg-background !rounded-none text-foreground px-4 flex items-center justify-center"
             onClick={apply}
           >
             <Search className="w-4 h-4" />
@@ -48,7 +48,7 @@ export default function FilterSidebar({ onFilter, query, range }: Readonly<Props
           onChange={(e) => setPrice([190, parseInt(e.target.value)])}
           className="w-full"
         />
-        <div className="flex justify-between m-0 mt-1 text-sm">
+        <div className="flex justify-between m-0 mt-1">
           <span>Preço: R$ {price[0]} — R$ {price[1]}</span>
         </div>
       </div>
