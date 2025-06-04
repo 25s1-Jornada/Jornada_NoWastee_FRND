@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - fix-visualizacao-modelo
   pull_request:
     branches:
       - main
+      - fix-visualizacao-modelo
   workflow_dispatch:
 
 jobs:
