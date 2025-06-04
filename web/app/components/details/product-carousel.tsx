@@ -6,6 +6,7 @@ import "keen-slider/keen-slider.min.css";
 import Image from "next/image";
 import { useState } from "react";
 import ModelVisualizer from "../model-visualizer";
+import { CubeIcon } from "@radix-ui/react-icons";
 
 interface Props {
   images: string[];
@@ -33,7 +34,7 @@ export default function ProductCarousel({ images }: Props) {
       >
         {images.map((img, i) => (
           <div
-            className="keen-slider__slide flex items-start justify-start h-96 w-full"
+            className="keen-slider__slide flex items-start justify-start !max-h-96 !h-96 !w-full !max-w-full"
             key={i}
           >
             <Image
@@ -81,7 +82,7 @@ export default function ProductCarousel({ images }: Props) {
             currentSlide === images.length ? "border-black" : "border-neutral-300"
           } rounded`}
         >
-          <span className="text-xl">🧊</span>
+          <CubeIcon></CubeIcon>
         </button>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Product } from '@/lib/entities/product.interface';
 import Image from 'next/image';
 import Link from 'next/link';

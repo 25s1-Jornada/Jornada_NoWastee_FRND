@@ -7,28 +7,24 @@ function FBXModel() {
   const model = useFBX("/models/tshirt.fbx"); // This will crash if run on server
   return <primitive object={model} scale={0.02} />;
 }
-
 function GLBModel() {
   const { scene } = useGLTF("/models/tshirt.glb");
-  return <primitive object={scene} scale={0.02} />;
+
+  // Optional fine-tuning
+  scene.rotation.y = Math.PI; // Optional flip if needed
+  return <primitive object={scene} scale={1.0} />;
 }
-
 export default function ModelVisualizer() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
   return (
-    <Canvas className="w-full h-full">
+    <Canvas
+      className="w-full h-full"
+      camera={{ position: [0, 1.5, 3], fov: 45 }}
+    >
       <ambientLight intensity={1.2} />
-      <directionalLight position={[10, 10, 5]} />
+      <directionalLight position={[5, 5, 5]} intensity={1.0} />
       <Suspense fallback={null}>
         <GLBModel />
-        <OrbitControls />
+        <OrbitControls enablePan={true} />
       </Suspense>
     </Canvas>
   );
