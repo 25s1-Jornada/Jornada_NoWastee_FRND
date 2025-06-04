@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { Search, ShoppingCart, User } from "lucide-react";
 
 export default function Navbar() {
   return (
@@ -8,19 +11,27 @@ export default function Navbar() {
         <a href="#" className="hover:underline">tech</a>
         <a href="#" className="hover:underline">about us</a>
       </div>
+
       <Image
-            src={'/images/logo.png'}
-            alt={'logo'}
-            width={240}
-            height={100}
-            className="h-auto object-cover"
-          />
-      <div className="flex gap-4 text-sm">
+        src={'/images/logo.png'}
+        alt={'logo'}
+        width={240}
+        height={100}
+        className="h-auto object-cover"
+      />
+
+      <div className="flex gap-4 text-sm items-center">
         <a href="#">zero waste</a>
         <a href="#">movement</a>
-        <button className="text-xl">🔍</button>
-        <button className="text-xl">🛒</button>
-        <button className="text-xl">👤</button>
+        <button aria-label="Search">
+          <Search className="w-5 h-5" />
+        </button>
+        <button aria-label="Cart">
+          <ShoppingCart className="w-5 h-5" />
+        </button>
+        <button aria-label="User">
+          <User className="w-5 h-5" />
+        </button>
       </div>
     </nav>
   );
