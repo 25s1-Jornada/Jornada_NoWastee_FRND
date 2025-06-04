@@ -4,7 +4,7 @@
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModelVisualizer from "../model-visualizer";
 import { CubeIcon } from "@radix-ui/react-icons";
 
@@ -17,9 +17,18 @@ export default function ProductCarousel({ images }: Props) {
   const [ref, slider] = useKeenSlider<HTMLDivElement>({
     initial: 0,
     slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel);
+      const index = slider.track.details.rel;
+      setCurrentSlide(index);
     },
   });
+  
+  useEffect(() => {
+    console.log(slider);
+    if (slider.current) {
+      slider.current.options.drag = currentSlide !== images.length;
+      slider.current.update();
+    }
+  }, [currentSlide, images.length]);
 
   const goToSlide = (index: number) => {
     slider.current?.moveToIdx(index);
@@ -30,11 +39,11 @@ export default function ProductCarousel({ images }: Props) {
       {/* Main carousel */}
       <div
         ref={ref}
-        className="keen-slider aspect-[3/4] rounded overflow-hidden w-full"
+        className="keen-slider aspect-[3/4] h-96 rounded overflow-hidden w-full"
       >
         {images.map((img, i) => (
           <div
-            className="keen-slider__slide flex items-start justify-start !max-h-96 !h-96 !w-full !max-w-full"
+            className="keen-slider__slide flex items-start justify-start !min-h-96 !max-h-96 !h-96 !w-full !max-w-full"
             key={i}
           >
             <Image
@@ -43,13 +52,13 @@ export default function ProductCarousel({ images }: Props) {
               fill
               priority={i === 0}
               sizes="600px, 400px"
-              className="object-cover"
+              className="object-contain"
             />
           </div>
         ))}
 
         <div
-          className="keen-slider__slide flex items-center justify-center bg-white"
+          className="keen-slider__slide flex items-start justify-start !min-h-96 !max-h-96 !h-96 !w-full !max-w-full"
           key={images.length}
         >
           <ModelVisualizer />

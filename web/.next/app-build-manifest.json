@@ -1,5 +1,20 @@
 {
   "pages": {
+    "/_not-found/page": [
+      "static/chunks/node_modules_next_dist_1a6ee436._.js",
+      "static/chunks/app_favicon_ico_mjs_1579f9cb._.js",
+      "static/chunks/[root of the server]__58154d19._.css",
+      "static/chunks/node_modules_0158d0b2._.js",
+      "static/chunks/app_components_navbar_tsx_378839b7._.js",
+      "static/chunks/app_layout_tsx_f0e4c1a2._.js",
+      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_49a6ea35._.js",
+      "static/chunks/node_modules_next_dist_compiled_2ce9398a._.js",
+      "static/chunks/node_modules_next_dist_client_43e3ffb8._.js",
+      "static/chunks/node_modules_next_dist_3bfaed20._.js",
+      "static/chunks/node_modules_@swc_helpers_cjs_00636ac3._.js",
+      "static/chunks/_e69f0d32._.js",
+      "static/chunks/_be317ff2._.js"
+    ],
     "/page": [
       "static/chunks/node_modules_next_dist_1a6ee436._.js",
       "static/chunks/app_favicon_ico_mjs_1579f9cb._.js",
@@ -28,10 +43,11 @@
       "static/chunks/node_modules_three_build_three_core_df0bde7e.js",
       "static/chunks/node_modules_three_build_three_module_230a9f89.js",
       "static/chunks/node_modules_three_build_three_module_90b4155f.js",
+      "static/chunks/node_modules_three-stdlib_08a890dc._.js",
       "static/chunks/node_modules_react-reconciler_25c8ec02._.js",
-      "static/chunks/node_modules_@react-three_fiber_dist_ab808daa._.js",
-      "static/chunks/node_modules_three-stdlib_d8347784._.js",
-      "static/chunks/node_modules_90054e90._.js",
+      "static/chunks/node_modules_@react-three_fiber_dist_e1176362._.js",
+      "static/chunks/node_modules_@radix-ui_react-icons_dist_react-icons_esm_ecd85ef9.js",
+      "static/chunks/node_modules_1a12beab._.js",
       "static/chunks/app_components_17cd0728._.js",
       "static/chunks/node_modules_keen-slider_keen-slider_min_be2e1e5c.css",
       "static/chunks/app_pages_product_page_tsx_dae4d75f._.js",
