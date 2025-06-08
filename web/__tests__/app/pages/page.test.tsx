@@ -33,6 +33,6 @@ describe('HomePage', () => {
     expect(screen.getByTestId('product-list')).toBeInTheDocument();
 
     expect(screen.getAllByText('Mock Product').length).toBeGreaterThan(1);
-    expect(screen.getByText('Other Product')).toBeInTheDocument();
+    expect(screen.getAllByText('Other Product').length).toBeGreaterThan(1);
   });
 });
