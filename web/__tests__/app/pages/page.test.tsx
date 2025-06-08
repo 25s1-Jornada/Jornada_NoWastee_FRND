@@ -18,8 +18,8 @@ vi.mock('@/app/components/filter-sidebar', () => ({
 vi.mock('@/app/components/product-list', () => ({
   default: ({ products }: ProductListComponentProps) => (
     <div data-testid="product-list">
-      {products.map((p: Product) => (
-        <div key={p.id}>{p.name}</div>
+      {products.map((p: Product, index: number) => (
+        <div key={`${p.id}-${index}`}>{p.name}</div>
       ))}
     </div>
   ),
@@ -32,7 +32,7 @@ describe('HomePage', () => {
     expect(screen.getByTestId('sidebar')).toBeInTheDocument();
     expect(screen.getByTestId('product-list')).toBeInTheDocument();
 
-    expect(screen.getByText('Mock Product')).toBeInTheDocument();
+    expect(screen.getAllByText('Mock Product').length).toBeGreaterThan(1);
     expect(screen.getByText('Other Product')).toBeInTheDocument();
   });
 });
