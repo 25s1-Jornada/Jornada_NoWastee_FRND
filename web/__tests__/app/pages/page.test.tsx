@@ -32,7 +32,7 @@ describe('HomePage', () => {
     expect(screen.getByTestId('sidebar')).toBeInTheDocument();
     expect(screen.getByTestId('product-list')).toBeInTheDocument();
 
-    expect(screen.getAllByText('Mock Product').length).toBeGreaterThan(1);
-    expect(screen.getAllByText('Other Product').length).toBeGreaterThan(1);
+    expect(screen.getByText('Mock Product')).toBeInTheDocument();
+    expect(screen.getByText('Other Product')).toBeInTheDocument();
   });
 });
