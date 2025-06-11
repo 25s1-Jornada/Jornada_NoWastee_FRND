@@ -54,3 +54,15 @@ body {
   color: var(--foreground);
   font-family: var(--font-quicksand);
 }
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 9999px;
+  border: 2px solid white;
+  transition: transform 0.2s ease;
+}
+.circle:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
