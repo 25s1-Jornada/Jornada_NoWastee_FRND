@@ -15,18 +15,19 @@ interface Props {
 export default function ProductCarousel({ images }: Props) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [ref, slider] = useKeenSlider<HTMLDivElement>({
-    initial: 5,
+    initial: 0,
     slideChanged(slider) {
-      const index = slider.track.details.rel;
-      setCurrentSlide(index);
+      setCurrentSlide(slider.track.details.rel);
     },
+    drag: currentSlide !== images.length, // ← Dynamic drag config
   });
   
+  
   useEffect(() => {
-    console.log(slider);
     if (slider.current) {
-      slider.current.options.drag = currentSlide !== images.length;
-      slider.current.update();
+      slider.current.update({
+        drag: currentSlide !== images.length,
+      });
     }
   }, [currentSlide, images.length]);
 
