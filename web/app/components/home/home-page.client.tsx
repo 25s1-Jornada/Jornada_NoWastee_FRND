@@ -11,7 +11,7 @@ interface Props {
 
 export default function HomePageClient({ initialProducts }: Readonly<Props>) {
   const [products] = useState<Product[]>(initialProducts);
-  const [filtered, setFiltered] = useState<Product[]>([...initialProducts, ...initialProducts]);
+  const [filtered, setFiltered] = useState<Product[]>([...initialProducts]);
   const [query, setQuery] = useState("");
   const [priceRange, setPriceRange] = useState<[number, number]>([190, 300]);
 
