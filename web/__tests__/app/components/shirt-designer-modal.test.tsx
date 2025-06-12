@@ -4,14 +4,11 @@ import ShirtDesignerModal from '@/app/components/details/designer/shirt-designer
 import { state } from '@/app/components/details/designer/store';
 import { act } from 'react';
 
-// Mock para evitar erros com <Canvas />
 vi.mock('@react-three/fiber', () => ({
-  Canvas: ({ children }) => <div data-testid="canvas">{children}</div>,
-  useFrame: () => null,
-  AmbientLight: () => <div />,
-  Primitive: () => <div />,
-  Group: ({ children }) => <div data-testid="camera-group">{children}</div>,
-}));
+    Canvas: ({ children }) => <div data-testid="canvas">{children}</div>,
+    useFrame: () => null,
+    group: ({ children, ...props }) => <div data-testid="camera-group" {...props}>{children}</div>,
+  }));
 
 vi.mock('@react-three/drei', () => ({
   AccumulativeShadows: ({ children }) => <div>{children}</div>,
@@ -26,14 +23,14 @@ vi.mock('@react-three/drei', () => ({
   useTexture: () => 'mock-texture',
 }));
 
-beforeAll(() => {
-    vi.spyOn(console, 'error').mockImplementation((msg) => {
-      if (
-        typeof msg === 'string' &&
-        msg.includes('not wrapped in act')
-      ) return; // ignora
-      console.error(msg);
-    });
+vi.mock('@/app/components/details/designer/shirt-designer-modal', async () => {
+    const actual = await vi.importActual<any>('@/app/components/details/designer/shirt-designer-modal');
+    return {
+      ...actual,
+      CameraRig: ({ children }) => {
+        return <div data-testid="camera-rig">{children}</div>;
+      },
+    };
   });
 
 describe('ShirtDesignerModal', () => {
@@ -42,6 +39,19 @@ describe('ShirtDesignerModal', () => {
     state.decal = 'logo_nowastee';
     state.intro = false;
   });
+
+    it('renderiza corretamente o modal com o canvas e os elementos 3D', () => {
+        render(<ShirtDesignerModal open={true} onClose={() => {}} />);
+    
+        // Canvas renderizado
+        expect(screen.getByTestId('canvas')).toBeInTheDocument();
+    
+        // Decal (mockado)
+        expect(screen.getByTestId('decal')).toBeInTheDocument();
+    
+        // Verifica que o modal abriu
+        expect(screen.getByText(/Personalizar Camiseta/i)).toBeInTheDocument();
+    });
 
     it('altera a cor quando um botão de cor é clicado', () => {
     render(<ShirtDesignerModal open={true} onClose={() => {}} />);
@@ -66,9 +76,10 @@ describe('ShirtDesignerModal', () => {
     expect(state.decal).toBe('logo_nowastee');
   });
 
-  it('renderiza o movimento da câmera', () => {
+  it('renderiza o CameraRig corretamente', () => {
     render(<ShirtDesignerModal open={true} onClose={() => {}} />);
-    expect(screen.getByTestId('camera-group')).toBeInTheDocument();
+    const groupElement = document.querySelector('group');
+    expect(groupElement).toBeTruthy();
   });
   
 });
