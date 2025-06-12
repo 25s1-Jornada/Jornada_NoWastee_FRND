@@ -1,7 +1,7 @@
 'use client';
 
 import { Dialog } from '@headlessui/react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, AmbientLight, Primitive, Group } from '@react-three/fiber';
 import {
   AccumulativeShadows,
   Center,
@@ -38,13 +38,13 @@ function Shirt() {
   });
 
   return (
-    <primitive
+    <Primitive
       castShadow
       object={firstMesh}
       dispose={null}
     >
       <Decal position={[0, 0.04, 0.15]} rotation={[0, 0, 0]} scale={0.15} map={texture} />
-    </primitive>
+    </Primitive>
   );
 }
 
@@ -93,6 +93,7 @@ function OverlayContent({ onClose }: { onClose: () => void }) {
           <div
             key={color}
             className="circle"
+            title={color}
             style={{ backgroundColor: color }}
             onClick={() => (state.color = color)}
           />
@@ -120,7 +121,7 @@ function CameraRig({ children }) {
     easing.damp3(state.camera.position, [snap.intro ? -state.viewport.width / 4 : 0, 0, 2], 0.25, delta)
     easing.dampE(group.current.rotation, [state.pointer.y / 10, -state.pointer.x / 5, 0], 0.25, delta)
   })
-  return <group ref={group}>{children}</group>
+  return <Group ref={group} data-testid="camera-group">{children}</Group>
 }
 
 export default function ShirtDesignerModal({
@@ -136,7 +137,7 @@ export default function ShirtDesignerModal({
       <div className="fixed top-[10%] left-[10%] w-[80%] h-[80%] bg-[#e0e0e0] rounded overflow-hidden shadow-xl">
         <Canvas shadows camera={{ position: [0, 0, 0], fov: 25 }}>
           <CameraRig>
-            <ambientLight intensity={Math.PI * 0.5} />
+            <AmbientLight intensity={Math.PI * 0.5} />
             <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/potsdamer_platz_1k.hdr"  />
             <Suspense fallback={null}>
               <Backdrop />

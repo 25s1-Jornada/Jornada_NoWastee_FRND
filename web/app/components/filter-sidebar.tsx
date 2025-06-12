@@ -30,6 +30,7 @@ export default function FilterSidebar({ onFilter, query, range }: Readonly<Props
             onChange={(e) => setSearch(e.target.value)}
           />
           <button
+            aria-label="Aplicar filtro"
             className="bg-background !rounded-none text-foreground px-4 flex items-center justify-center"
             onClick={apply}
           >
