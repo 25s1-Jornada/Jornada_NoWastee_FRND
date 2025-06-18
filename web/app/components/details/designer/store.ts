@@ -7,4 +7,5 @@ export const state = proxy({
   decals: ['react', 'three2', 'pmndrs', 'logo_nowastee'],
   color: '#EFBD4E',
   decal: 'logo_nowastee',
+  focusTag: false, // para controlar o zoom da camera e outras features.
 });

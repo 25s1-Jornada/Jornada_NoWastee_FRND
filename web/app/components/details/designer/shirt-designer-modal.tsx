@@ -1,7 +1,7 @@
 'use client';
 
 import { Dialog } from '@headlessui/react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import {
   AccumulativeShadows,
   Center,
@@ -10,19 +10,21 @@ import {
   RandomizedLight,
   useGLTF,
   useTexture,
+  Text
 } from '@react-three/drei';
 import { easing } from 'maath';
 import { useRef, Suspense } from 'react';
 import { useSnapshot } from 'valtio';
 import { state } from './store';
 import * as THREE from 'three';
+import { EffectComposer, Selection, N8AO, Outline, TiltShift2, ToneMapping, Select } from '@react-three/postprocessing';
+import TagGroup from './tag-group';
 
 function Shirt() {
   const snap = useSnapshot(state);
   const texture = useTexture(`/teste/${snap.decal}.png`);
   const { nodes, materials } = useGLTF('/teste/shirt_baked_collapsed.glb');
 
-  // Grab first mesh dynamically
   const firstMesh = Object.values(nodes).find(
     (n): n is THREE.Mesh => (n as THREE.Mesh).isMesh
   );
@@ -99,7 +101,14 @@ function OverlayContent({ onClose }: { onClose: () => void }) {
           />
         ))}
       </div>
-
+      {snap.focusTag && (
+        <button
+          onClick={() => (state.focusTag = false)}
+          className="absolute top-6 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-white text-black rounded pointer-events-auto"
+        >
+          Voltar
+        </button>
+      )}
       <div className="absolute bottom-10 right-10 flex gap-4 pointer-events-auto">
         {snap.decals.map((decal) => (
           <img
@@ -118,9 +127,14 @@ function CameraRig({ children }) {
   const group = useRef()
   const snap = useSnapshot(state)
   useFrame((state, delta) => {
-    easing.damp3(state.camera.position, [snap.intro ? -state.viewport.width / 4 : 0, 0, 2], 0.25, delta)
-    easing.dampE(group.current.rotation, [state.pointer.y / 10, -state.pointer.x / 5, 0], 0.25, delta)
-  })
+    const camera = state.camera;
+    const targetPosition = snap.focusTag
+      ? [0.25, -0.1, 0.8] // ← Adjust these coordinates to zoom into tag
+      : [0, 0, 2];       // ← Default view
+
+    easing.damp3(state.camera.position, targetPosition, 0.25, delta);
+    easing.dampE(group.current.rotation, [state.pointer.y / 10, -state.pointer.x / 5, 0], 0.25, delta);
+  });
   return <group ref={group}>{children}</group>
 }
 
@@ -131,6 +145,7 @@ export default function ShirtDesignerModal({
   open: boolean;
   onClose: () => void;
 }) {
+  const snap = useSnapshot(state)
   return (
     <Dialog open={open} onClose={onClose} className="fixed inset-0 z-50">
       <div className="fixed inset-0 bg-[#00000090]" aria-hidden="true" />
@@ -142,6 +157,7 @@ export default function ShirtDesignerModal({
             <Suspense fallback={null}>
               <Backdrop />
               <Center>
+                <TagGroup />
                 <Shirt />
               </Center>
             </Suspense>
