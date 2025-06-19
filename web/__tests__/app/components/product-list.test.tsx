@@ -22,6 +22,7 @@ const mockProducts = [
 ];
 
 describe('ProductList', () => {
+  // Testa se todos os produtos da lista são renderizados corretamente com nome, preço e categoria
   it('renders all product cards', () => {
     render(<ProductList products={mockProducts} />);
 
