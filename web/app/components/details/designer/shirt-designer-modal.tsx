@@ -1,54 +1,14 @@
 'use client';
-
 import { Dialog } from '@headlessui/react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import {
-  AccumulativeShadows,
-  Center,
-  Decal,
-  Environment,
-  RandomizedLight,
-  useGLTF,
-  useTexture,
-  Text
-} from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { AccumulativeShadows, Center, Decal, Environment, RandomizedLight, useGLTF, useTexture } from '@react-three/drei';
 import { easing } from 'maath';
 import { useRef, Suspense } from 'react';
 import { useSnapshot } from 'valtio';
 import { state } from './store';
 import * as THREE from 'three';
-import { EffectComposer, Selection, N8AO, Outline, TiltShift2, ToneMapping, Select } from '@react-three/postprocessing';
 import TagGroup from './tag-group';
-
-function Shirt() {
-  const snap = useSnapshot(state);
-  const texture = useTexture(`/teste/${snap.decal}.png`);
-  const { nodes, materials } = useGLTF('/teste/shirt_baked_collapsed.glb');
-
-  const firstMesh = Object.values(nodes).find(
-    (n): n is THREE.Mesh => (n as THREE.Mesh).isMesh
-  );
-
-  if (!firstMesh) return null;
-
-  useFrame((_, delta) => {
-    if ('lambert1' in materials) {
-      easing.dampC((materials.lambert1 as any).color, snap.color, 0.25, delta);
-    } else if (firstMesh.material && 'color' in firstMesh.material) {
-      easing.dampC((firstMesh.material as any).color, snap.color, 0.25, delta);
-    }
-  });
-
-  return (
-    <primitive
-      castShadow
-      object={firstMesh}
-      dispose={null}
-    >
-      <Decal position={[0, 0.04, 0.15]} rotation={[0, 0, 0]} scale={0.15} map={texture} />
-    </primitive>
-  );
-}
+import ShirtRender from './shirt';
 
 function Backdrop() {
   const shadows = useRef(null);
@@ -82,33 +42,29 @@ function OverlayContent({ onClose }: { onClose: () => void }) {
     <div className="absolute top-0 left-0 w-full h-full text-white p-6 z-10 pointer-events-none">
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold pointer-events-auto">Personalizar Camiseta</h2>
-        <button
-          onClick={onClose}
-          className="exit px-4 py-2 bg-black text-white rounded pointer-events-auto"
-        >
+        <button onClick={onClose} className="exit px-4 py-2 bg-black text-white rounded pointer-events-auto">
           X
         </button>
       </div>
 
       <div className="absolute bottom-10 left-10 flex gap-4 pointer-events-auto">
         {snap.colors.map((color) => (
-          <div
-            key={color}
-            className="circle"
-            title={color}
-            style={{ backgroundColor: color }}
-            onClick={() => (state.color = color)}
-          />
+          <div key={color} className="circle" title={color} style={{ backgroundColor: color }} onClick={() => (state.color = color)} />
         ))}
       </div>
+
       {snap.focusTag && (
         <button
-          onClick={() => (state.focusTag = false)}
+          onClick={() => {
+            state.focusTag = false;
+            state.labelContent = null;
+          }}
           className="absolute top-6 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-white text-black rounded pointer-events-auto"
         >
           Voltar
         </button>
       )}
+
       <div className="absolute bottom-10 right-10 flex gap-4 pointer-events-auto">
         {snap.decals.map((decal) => (
           <img
@@ -124,28 +80,17 @@ function OverlayContent({ onClose }: { onClose: () => void }) {
 }
 
 function CameraRig({ children }) {
-  const group = useRef()
-  const snap = useSnapshot(state)
+  const group = useRef();
+  const snap = useSnapshot(state);
   useFrame((state, delta) => {
-    const camera = state.camera;
-    const targetPosition = snap.focusTag
-      ? [0.25, -0.1, 0.8] // ← Adjust these coordinates to zoom into tag
-      : [0, 0, 2];       // ← Default view
-
+    const targetPosition = snap.focusTag ? [0.25, -0.1, 0.8] : [0, 0, 2];
     easing.damp3(state.camera.position, targetPosition, 0.25, delta);
     easing.dampE(group.current.rotation, [state.pointer.y / 10, -state.pointer.x / 5, 0], 0.25, delta);
   });
-  return <group ref={group}>{children}</group>
+  return <group ref={group}>{children}</group>;
 }
 
-export default function ShirtDesignerModal({
-  open,
-  onClose,
-}: {
-  open: boolean;
-  onClose: () => void;
-}) {
-  const snap = useSnapshot(state)
+export default function ShirtDesignerModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   return (
     <Dialog open={open} onClose={onClose} className="fixed inset-0 z-50">
       <div className="fixed inset-0 bg-[#00000090]" aria-hidden="true" />
@@ -153,12 +98,12 @@ export default function ShirtDesignerModal({
         <Canvas shadows camera={{ position: [0, 0, 0], fov: 25 }}>
           <CameraRig>
             <ambientLight intensity={Math.PI * 0.5} />
-            <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/potsdamer_platz_1k.hdr"  />
+            <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/potsdamer_platz_1k.hdr" />
             <Suspense fallback={null}>
               <Backdrop />
               <Center>
                 <TagGroup />
-                <Shirt />
+                <ShirtRender />
               </Center>
             </Suspense>
           </CameraRig>

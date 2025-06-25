@@ -12,17 +12,8 @@ export default function TagGroup() {
   const [hovered, hover] = useState(false)  // Hover state
   // Debounce hover a bit to stop the ticker from being erratic
   const debouncedHover = useCallback(debounce(hover, 15), [])
-  const over = (hovering: boolean) => (event) => (event.stopPropagation(), debouncedHover(true));
+  const over = (hovering: boolean) => (event) => (event.stopPropagation(), debouncedHover(hovering));
   const snap = useSnapshot(state);
-
-  useEffect(() => {
-    document.body.style.cursor = hovered ? 'pointer' : 'auto'
-    if (hovered) {
-      // camera zooms into tag mesh object. Must communicate to the camerarig state.
-    } else {
-      // camera resets to initial zoom. Must communicate to the camerarig state.
-    }
-  }, [hovered])
 
   return (
     <Bvh firstHitOnly>
@@ -64,9 +55,7 @@ function TagEffects() {
 
   return (
     <EffectComposer stencilBuffer enableNormalPass={false} autoClear={false} multisampling={4}>
-      <N8AO halfRes aoSamples={5} aoRadius={0.4} distanceFalloff={0.75} intensity={1} />
-      <Outline visibleEdgeColor={0xffffff} width={size.width} edgeStrength={8} />
-      <TiltShift2 samples={5} />
+      <Outline visibleEdgeColor={0xffffff} width={size.width + 3} edgeStrength={16} />
       <ToneMapping />
     </EffectComposer>
   )
